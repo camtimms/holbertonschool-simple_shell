@@ -4,7 +4,7 @@
 /**
  * main - Prints the command the user inputs
  *
- * Return: Success (0)
+ * Return: Number of characters in the input
  */
 
 int main(void)
@@ -25,5 +25,5 @@ int main(void)
 	}
 	
 	free(line);	
-	return (0);
+	return (num_char);
 }
