@@ -20,6 +20,7 @@ int main (void)
 	int num_char = 0;
 	pid_t child_pid;
 	int status;
+	char *argv[2];
 
 	while (1)
 	{
@@ -29,18 +30,22 @@ int main (void)
 		if (num_char == -1)
 			break;
 
+		argv[0] = line;
+		argv[1] = NULL;
+
 		child_pid = fork();
 
 		if (child_pid == -1)
 		{
-			perror("fork failed:");
+			perror("fork failed");
+			free(line);
 			return (-1); 
 		}
 		if (child_pid == 0)
 		{
-			if (execve(line, NULL, NULL) == -1)
+			if (execve(line, argv, NULL) == -1)
 			{
-				perror("execve failed:");
+				perror("execve failed");
 				return (-1);
 			}
 		}
