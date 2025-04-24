@@ -30,6 +30,9 @@ int main (void)
 		if (num_char == -1)
 			break;
 
+		if (line[num_char - 1] == '\n')
+			line[num_char - 1] = '\0';
+
 		argv[0] = line;
 		argv[1] = NULL;
 
