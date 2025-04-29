@@ -16,9 +16,9 @@ int main(void)
 	int num_char = 0;
 	pid_t child_pid;
 	int status;
-	char *argv[2];
+	char *argv[64];
 	int i = 0;
-	char *token = malloc(64);
+	char *token;
 
 	while (1)
 	{
@@ -40,7 +40,10 @@ int main(void)
 			token = strtok(NULL, " ");
 			i++;
 		}
-		free(token);
+		argv[i] = NULL;
+
+		if (argv[0] == NULL)
+			continue;
 
 		child_pid = fork();
 
@@ -55,7 +58,7 @@ int main(void)
 			if (execve(argv[0], argv, NULL) == -1)
 			{
 				perror("execve failed");
-				return (-1);
+				return (EXIT_FAILURE);
 			}
 		}
 		else
