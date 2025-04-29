@@ -27,10 +27,12 @@ int main (void)
 		if (num_char == -1)
 			break;
 
-		line = remove_space(line);
-
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
+
+		line = remove_space(line);
+		if (line == NULL || line[0] == '\0')
+			continue;
 
 		argv[0] = line;
 		argv[1] = NULL;
