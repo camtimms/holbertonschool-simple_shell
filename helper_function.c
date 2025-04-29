@@ -1,7 +1,14 @@
 #include "main.h"
+
 /**
+ * remove_space - Removes leading white spaces
  *
+ * @line: The string/line you want to remove whitespaces from
  *
+ * Descriptions: Uses an array and two indices to reassign characters to the
+ * start of a line.
+ *
+ * Return: String or NULL
  */
 char *remove_space(char *line)
 {
@@ -11,12 +18,12 @@ char *remove_space(char *line)
 	i = 0;
 	j = 0;
 
-	if(line == NULL)
-		return(NULL);
+	if (line == NULL)
+		return (NULL);
 
 	while (line[i] == ' ')
 		i = i + 1;
-/*     bin/ls    -la  */
+
 	while (line[i] != '\0')
 	{
 		line[j] = line[i];
@@ -24,7 +31,9 @@ char *remove_space(char *line)
 		j = j + 1;
 	}
 
-	return(line);
+	line[j] = '\0';
+
+	return (line);
 }
 
 
