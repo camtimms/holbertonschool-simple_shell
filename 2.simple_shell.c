@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+#include "main.h"
 
 /**
  * main - Super Simple Shell
@@ -31,8 +27,13 @@ int main (void)
 		if (num_char == -1)
 			break;
 
+		line = remove_space(line);
+
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
+/*   /bin/ls   \n   /bin/ls   [remove white paces]*/
+/*each time a command is found => run fork and run command is*/
+/*check up len size*/
 
 		argv[0] = line;
 		argv[1] = NULL;
