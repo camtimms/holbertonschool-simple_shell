@@ -17,6 +17,8 @@ int main (void)
 	pid_t child_pid;
 	int status;
 	char *argv[2];
+	int i = 0;
+	char *token = malloc(64);
 
 	while (1)
 	{
@@ -29,13 +31,16 @@ int main (void)
 
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
-
-		line = remove_space(line);
-		if (line == NULL || line[0] == '\0')
-			continue;
-
-		argv[0] = line;
-		argv[1] = NULL;
+		
+		token = strtok(line, " ");
+		i = 0;
+		while (token != NULL)
+		{
+			argv[i] = token;
+			token = strtok(NULL, " ");
+			i++;
+		}
+		free(token);
 
 		child_pid = fork();
 
@@ -47,7 +52,7 @@ int main (void)
 		}
 		if (child_pid == 0)
 		{
-			if (execve(line, argv, NULL) == -1)
+			if (execve(argv[0], argv, NULL) == -1)
 			{
 				perror("execve failed");
 				return (-1);
