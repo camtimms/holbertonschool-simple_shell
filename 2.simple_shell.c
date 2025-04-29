@@ -29,9 +29,6 @@ int main(void)
 		if (num_char == -1)
 			break;
 
-		if (line == NULL)
-			continue;
-
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
 
@@ -44,6 +41,9 @@ int main(void)
 			i++;
 		}
 		argv[i] = NULL;
+
+		if (argv[0] == NULL)
+			continue;
 
 		child_pid = fork();
 
