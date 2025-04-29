@@ -24,11 +24,11 @@ int main (void)
 
 	while (1)
 	{
-		printf("$ ");
-
 		num_char = getline(&line, &len, stdin);
 		if (num_char == -1)
 			break;
+
+		printf("$ ");
 
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
