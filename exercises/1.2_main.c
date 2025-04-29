@@ -7,8 +7,9 @@ int main(void)
 {
     char input[] = "hello there general kenobi";
     char **words = split_string(input);
+    int i;
 
-    for (int i = 0; words[i] != NULL; i++) 
+    for (i = 0; words[i] != NULL; i++) 
     {
         printf("Word[%d]: %s\n", i, words[i]);
     }
