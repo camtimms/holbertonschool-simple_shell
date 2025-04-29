@@ -1,4 +1,6 @@
 #include "main.h"
+#include <stdio.h>
+#include <string.h>
 
 /**
  * line_to_arr - Converts a string/line to an array
@@ -14,6 +16,39 @@
 char **line_to_arr(char *line)
 {
 	int i = 0;
-	char* token = malloc(64);
+	int arr_size = 2; 
+	char *token;
+	char **arr = malloc(arr_size * sizeof(char *));
+	char **temp;
 
+	if (arr == NULL)
+	{
+		perror("malloc failed");
+		return (NULL);
+	}
+
+	token = strtok(line, " ");
+	
+	while (token != NULL)
+	{
+		if (i >= arr_size - 1)
+		{
+			arr_size *= 2;
+			temp = realloc(arr, arr_size * sizeof(char *));
+			if (temp == NULL)
+			{
+				perror("realloc failed");
+				free(arr);
+				return (NULL);
+			}
+			arr = temp;
+		}
+
+		arr[i] = token;
+		token = strtok(NULL, " ");
+		i++;
+	}
+
+	arr[i] = NULL;
+	return (arr);
 }

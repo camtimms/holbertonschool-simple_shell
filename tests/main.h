@@ -9,5 +9,6 @@
 
 char *remove_space(char *);
 char *remove_traling_spaces(char *);
+char **line_to_arr(char *);
 
 #endif
