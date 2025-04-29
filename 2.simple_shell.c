@@ -29,7 +29,7 @@ int main(void)
 		if (num_char == -1)
 			break;
 
-		if (line = NULL)
+		if (line == NULL)
 			continue;
 
 		if (line[num_char - 1] == '\n')
