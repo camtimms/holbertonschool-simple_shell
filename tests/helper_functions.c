@@ -52,3 +52,22 @@ char **line_to_arr(char *line)
 	arr[i] = NULL;
 	return (arr);
 }
+
+/**
+ * free_arr - Frees an array created by line_to_arr
+ *
+ * Return: void
+ */
+
+void free_arr(char **argv)
+{
+	int i;
+
+	if (argv == NULL)
+		return;
+
+	for (i = 0; argv[i] != NULL; i++)
+		free(argv[i]);
+	free(argv);
+}
+

@@ -52,6 +52,8 @@ int main(void)
 		}
 		else
 			wait(&status);
+
+		free_arr(argv);
 	}
 
 	free(line);
