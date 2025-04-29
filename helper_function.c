@@ -25,9 +25,12 @@ char *remove_space(char *line)
 
 	/* Find last non-whitespace character */
 	end = start;
-	while (line[end] != '\0' && line[end] != ' ')
+	while (line[end] != '\0')
 		end++;
 	end--;
+
+	while (end > start && line[end] == ' ')
+		end--;
 
 	/* Shift charaters to the start of line */
 	while (start <= end)
