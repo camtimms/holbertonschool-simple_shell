@@ -9,7 +9,7 @@
  * Return: Success (0) or Failure (-1)
  */
 
-int main (void)
+int main(void)
 {
 	char *line =  NULL;
 	size_t len = 0;
@@ -31,7 +31,7 @@ int main (void)
 
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
-		
+
 		token = strtok(line, " ");
 		i = 0;
 		while (token != NULL)
@@ -48,7 +48,7 @@ int main (void)
 		{
 			perror("fork failed");
 			free(line);
-			return (-1); 
+			return (-1);
 		}
 		if (child_pid == 0)
 		{
@@ -61,7 +61,7 @@ int main (void)
 		else
 			wait(&status);
 	}
-	
-	free (line);
+
+	free(line);
 	return (0);
 }
