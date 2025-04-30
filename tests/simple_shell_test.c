@@ -38,7 +38,11 @@ int main(void)
 		printf("current command going into get_path:%s\n", argv[0]);
 		command_path = get_path(argv[0]);
 		printf("command_path: %s\n", command_path);
-
+		/*command_path != executable we return to new $input*/
+		if (command_path == NULL)
+		{
+			continue;
+		}
 		child_pid = fork();
 
 		if (child_pid == -1)
@@ -49,7 +53,7 @@ int main(void)
 		}
 		if (child_pid == 0)
 		{
-			if (execve(argv[0], argv, NULL) == -1)
+			if (execve(command_path, argv, NULL) == -1)
 			{
 				perror("execve failed");
 				return (EXIT_FAILURE);
