@@ -133,6 +133,8 @@ char *get_path(char *command)
 		}
 		path_token = strtok(NULL, ":");
 	}
+
+	free(path_dup);
 	perror("path not found - end of get_path.c");
 	return (NULL);/*need to change to no path found*/
 }
