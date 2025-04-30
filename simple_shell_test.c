@@ -35,9 +35,9 @@ int main(void)
 		if (argv[0] == NULL)
 			continue;
 
-		printf("current command going into get_path:%s\n", argv[0]);
+		/*printf("current command going into get_path:%s\n", argv[0]);*/
 		command_path = get_path(argv[0]);
-		printf("command_path: %s\n", command_path);
+		/*printf("command_path: %s\n", command_path);*/
 		/*command_path != executable we return to new $input*/
 		if (command_path == NULL)
 		{

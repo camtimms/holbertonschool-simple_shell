@@ -14,6 +14,16 @@ char *get_path(char *command)
 	struct stat st; /*empty struct*/
 	char *path_dup;
 
+	if(command[0] == '/')
+	{
+		/*failing path*/
+		if (stat(command, &st) == 0)
+		{
+			printf("path found(command): %s\n", command);
+			return(command);
+		}
+	}
+
 	path = strdup(getenv("PATH"));
 	if (path == NULL)
 	{
@@ -38,14 +48,9 @@ char *get_path(char *command)
 			printf("path found: %s\n", path_search);
 			return(path_search);
 		}
-		else if(stat(path_search, &st) == -1)
-		{
-			perror("path not found");
-			return(NULL);
-		}
 		path_token = strtok(NULL, ":");
 	}
-	perror("path not found");
+	perror("path not found - end of get_path.c");
 	return (NULL);/*need to change to no path found*/
 }
 
