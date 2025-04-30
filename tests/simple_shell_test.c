@@ -17,6 +17,7 @@ int main(void)
 	pid_t child_pid;
 	int status;
 	char **argv = NULL;
+	char *command_path;
 
 	while (1)
 	{
@@ -33,6 +34,10 @@ int main(void)
 		argv = line_to_arr(line);
 		if (argv[0] == NULL)
 			continue;
+
+		printf("current command going into get_path:%s\n", argv[0]);
+		command_path = get_path(argv[0]);
+		printf("command_path: %s\n", command_path);
 
 		child_pid = fork();
 
