@@ -182,7 +182,7 @@ char *get_path(char *command)
 		{
 			cmd_dup = strdup(command);
 			if (cmd_dup == NULL)
-				perror("get_path: cmd_dup failed");
+				/* perror("get_path: cmd_dup failed"); */
 			return(cmd_dup);
 		}
 		perror("get_path: invalid path");
@@ -196,7 +196,7 @@ char *get_path(char *command)
 	path_dup = strdup(path);
 	if (path_dup == NULL)
 	{
-		perror("get_path: path_dup failed");
+		/* perror("get_path: path_dup failed"); */
 		return (NULL);
 	}
 
@@ -233,6 +233,6 @@ char *get_path(char *command)
 	}
 
 	free(path_dup);
-	perror("path not found");
+	/* perror("path not found"); */
 	return (NULL);
 }
