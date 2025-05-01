@@ -12,6 +12,7 @@
 char *remove_space(char *);
 char *remove_traling_spaces(char *);
 char **line_to_arr(char *);
+void free_arr(char **);
 char *get_path(char *);
 
 #endif

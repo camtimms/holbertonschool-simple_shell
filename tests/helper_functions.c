@@ -15,7 +15,7 @@
 
 char **line_to_arr(char *line)
 {
-	int i = 0;
+	int i = 0, j;
 	int arr_size = 2; 
 	char *token;
 	char **arr = malloc(arr_size * sizeof(char *));
@@ -44,7 +44,16 @@ char **line_to_arr(char *line)
 			arr = temp;
 		}
 
-		arr[i] = token;
+		arr[i] = strdup(token);
+		if (arr[i] == NULL)
+		{
+			perror("strdup failed");
+			for (j = 0; j < i; j++)
+				free(arr[j]);
+			free(arr);
+			return (NULL);
+		}
+
 		token = strtok(NULL, " ");
 		i++;
 	}
@@ -54,7 +63,26 @@ char **line_to_arr(char *line)
 }
 
 /**
+ * free_arr - Frees an array created by line_to_arr
+ *
+ * Return: void
+ */
+
+void free_arr(char **argv)
+{
+	int i;
+
+	if (argv == NULL)
+		return;
+
+	for (i = 0; argv[i] != NULL; i++)
+		free(argv[i]);
+	free(argv);
+}
+
+/**
 * get_path - finds path from environment
+*
 * @command: input command
 *
 * Description: tokenises the path from the env, 
@@ -67,15 +95,13 @@ char *get_path(char *command)
 	char *path;
 	char *path_token;
 	char *path_search;
-	struct stat st; /*empty struct*/
+	struct stat st:
 	char *path_dup;
 
 	if(command[0] == '/')
 	{
-		/*failing path*/
 		if (stat(command, &st) == 0)
 		{
-			printf("path found(command): %s\n", command);
 			return(command);
 		}
 	}
@@ -84,28 +110,25 @@ char *get_path(char *command)
 	if (path == NULL)
 	{
 		perror("no path input");
-		return(NULL);/*no path found*/
+		return(NULL);
 	}
 
 	path_token = strtok(path, ":");
 
 	while (path_token != NULL)
 	{
-		printf("path token:%s\n", path_token);
-		
 		path_dup = strdup(path_token);
 		path_search = strcat(path_dup, "/");
 		path_search = strcat(path_search, command);
 
-		printf("path search:%s\n", path_search);
-
 		if (stat(path_search, &st) == 0)
 		{
-			printf("path found: %s\n", path_search);
 			return(path_search);
 		}
 		path_token = strtok(NULL, ":");
 	}
-	perror("path not found - end of get_path.c");
-	return (NULL);/*need to change to no path found*/
+
+	free(path_dup);
+	perror("path not found");
+	return (NULL);
 }
