@@ -42,12 +42,20 @@ int main(int argc, char **argv)
 		arr_arg = line_to_arr(line);
 		if (arr_arg == NULL)
 			continue;
+
+		/* Check if user entered empty command */
+		if (arr_arg[0] == NULL)
+		{
+			free_arr(arr_arg);
+			continue;
+		}
 		
 		/* Get file path for the command */
 		command_path = get_path(arr_arg[0]);
 		if (command_path == NULL)
 		{
-			fprintf(stderr, "%s: %d: %s: not found\n", argv[0], line_count, arr_arg[0]);
+			fprintf(stderr, "%s: %d: %s: not found\n",
+				argv[0], line_count, arr_arg[0]);
 			exit_status = 127;
 			free_arr(arr_arg);
 			continue;
