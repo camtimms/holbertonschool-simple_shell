@@ -47,7 +47,6 @@ int main(int argc, char **argv)
 		if (arr_arg[0] == NULL)
 		{
 			free_arr(arr_arg);
-			free(line);
 			continue;
 		}
 
@@ -55,6 +54,7 @@ int main(int argc, char **argv)
 		if (strcmp(arr_arg[0], "exit") == 0)
 		{
 			free_arr(arr_arg);
+			free(line);
 			exit(0);
 		}
 
