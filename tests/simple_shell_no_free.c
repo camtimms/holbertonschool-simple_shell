@@ -38,8 +38,6 @@ int main(void)
 		argv = line_to_arr(line);
 		if (argv == NULL)
 		{
-			free_arr(argv);
-			free(line);
 			continue;
 		}
 		
@@ -47,9 +45,6 @@ int main(void)
 		command_path = get_path(argv[0]);
 		if (command_path == NULL)
 		{
-			free_arr(argv);
-			free(command_path);
-			free(line);
 			continue;
 		}
 		
@@ -58,8 +53,6 @@ int main(void)
 		if (child_pid == -1)
 		{
 			perror("fork failed");
-			free(command_path);
-			free(line);
 			return (-1);
 		}
 		if (child_pid == 0)
@@ -73,9 +66,6 @@ int main(void)
 		else
 			wait(&status);
 
-		free(command_path);
-		free(line);
-		free_arr(argv);
 	}
 
 	return (0);
