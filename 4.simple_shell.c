@@ -55,7 +55,7 @@ int main(void)
 		if (child_pid == -1)
 		{
 			perror("fork failed");
-			free_str(command_path, line);
+			free_str(command_path, line, NULL);
 			return (-1);
 		}
 		if (child_pid == 0)
@@ -70,7 +70,7 @@ int main(void)
 			wait(&status);
 
 
-		free_str(command_path, line);
+		free_str(command_path, line, NULL);
 		free_arr(argv);
 	}
 

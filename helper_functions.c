@@ -165,6 +165,7 @@ char *get_path(char *command)
 		{
 			return(command);
 		}
+		perror("invalid path");
 		return (NULL);
 	}
 
