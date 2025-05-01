@@ -124,6 +124,7 @@ char *_getenv(char *name)
 char *get_path(char *command)
 {
 	char *path;
+	char *path_dup;
 	char *path_token;
 	char *path_full;
 	struct stat st;
@@ -139,17 +140,24 @@ char *get_path(char *command)
 		{
 			return(command);
 		}
-		return(NULL);
+		return (NULL);
 	}
 
-	path = strdup(_getenv("PATH"));
+	path = _getenv("PATH");
 	if (path == NULL)
 	{
 		perror("no path input");
-		return(NULL);
+		return (NULL);
 	}
 
-	path_token = strtok(path, ":");
+	path_dup = strdup(path);
+	if (path_dup == NULL)
+	{
+		perror("strdup failed");
+		return (NULL);
+	}
+
+	path_token = strtok(path_dup, ":");
 
 	while (path_token != NULL)
 	{
@@ -157,7 +165,7 @@ char *get_path(char *command)
 		path_full = malloc((strlen(path_token) + strlen(command) + 2)* sizeof(char));
 		if (path_full == NULL)
 		{
-			free(path);
+			free(path_dup);
 			return (NULL);
 		}
 		/* Iniitalize string and form full path */
@@ -169,7 +177,7 @@ char *get_path(char *command)
 		/* Check if file exists */
 		if (stat(path_full, &st) == 0)
 		{
-			free(path);
+			free(path_dup);
 			return (path_full);
 		}
 		
@@ -177,7 +185,7 @@ char *get_path(char *command)
 		free(path_full);
 	}
 
-	free(path);
+	free(path_dup);
 	perror("path not found");
 	return (NULL);
 }

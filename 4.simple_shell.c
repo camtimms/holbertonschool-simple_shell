@@ -66,14 +66,19 @@ int main(void)
 				perror("execve failed");
 				free(command_path);
 				free_arr(argv);
-				return (-1);
+				free(line);
+				exit(-1);
 			}
 		}
 		else
 			wait(&status);
 
+		free(command_path);
+		command_path = NULL;
 		free_arr(argv);
+		argv = NULL;
 		free(line);
+		line = NULL;
 	}
 
 	return (0);
