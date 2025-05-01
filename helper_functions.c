@@ -98,6 +98,11 @@ char *get_path(char *command)
 	char *path_full;
 	struct stat st;
 
+	if (command == NULL || command[0] == '\0')
+	{
+		return (NULL);
+	}
+
 	if(command[0] == '/')
 	{
 		if (stat(command, &st) == 0)
@@ -130,6 +135,7 @@ char *get_path(char *command)
 			return (NULL);
 		}
 		/* Iniitalize string and form full path */
+		path_full[0] = '\0';
 		strcat(path_full, path_dup);
 		strcat(path_full, "/");
 		strcat(path_full, command);

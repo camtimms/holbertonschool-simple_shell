@@ -1,7 +1,8 @@
-nclude <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <unistd.h>
 #include "main.h"
 
 /* Helper function to print test results */
@@ -23,11 +24,15 @@ int main() {
     /* Test 1: Command with absolute path that exists */
     result = get_path("/bin/ls");
     run_test("Absolute path to an existing command", "/bin/ls", result);
-    free(result);
+    /* Do not free result as it's not dynamically allocated */
+    if (result != NULL && strcmp(result, "/bin/ls") != 0){ 
+        free(result);
+    }
 
     /* Test 2: Command with absolute path that does not exist */
     result = get_path("/invalid/path");
     run_test("Absolute path to a non-existent command", NULL, result);
+    free(result);
 
     /* Test 3: Command in PATH */
     result = get_path("ls");
@@ -41,10 +46,12 @@ int main() {
     /* Test 4: Command not in PATH */
     result = get_path("nonexistentcommand");
     run_test("Command not found in PATH", NULL, result);
+    free(result);
 
     /* Test 5: Empty command */
     result = get_path("");
     run_test("Empty command string", NULL, result);
+    free(result);
 
     /* Test 6: PATH environment variable unset */
     unsetenv("PATH");
@@ -65,3 +72,4 @@ int main() {
     printf("All tests completed.\n");
     return 0;
 }
+
