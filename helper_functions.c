@@ -94,7 +94,6 @@ char *get_path(char *command)
 {
 	char *path;
 	char *path_token;
-	char *path_dup;
 	char *path_full;
 	struct stat st;
 
@@ -109,6 +108,7 @@ char *get_path(char *command)
 		{
 			return(command);
 		}
+		return(NULL);
 	}
 
 	path = strdup(getenv("PATH"));
@@ -123,21 +123,16 @@ char *get_path(char *command)
 
 	while (path_token != NULL)
 	{
-		/* Copy dir path */
-		path_dup = strdup(path_token);
-		
 		/* Allocate space for the full file path */
 		path_full = malloc((strlen(path_token) + strlen(command) + 2)* sizeof(char));
 		if (path_full == NULL)
 		{
 			free(path);
-			free(path_dup);
-			free(path_full);
 			return (NULL);
 		}
 		/* Iniitalize string and form full path */
 		path_full[0] = '\0';
-		strcat(path_full, path_dup);
+		strcat(path_full, path_token);
 		strcat(path_full, "/");
 		strcat(path_full, command);
 		
@@ -145,16 +140,14 @@ char *get_path(char *command)
 		if (stat(path_full, &st) == 0)
 		{
 			free(path);
-			free(path_dup);
 			return (path_full);
 		}
 		
 		path_token = strtok(NULL, ":");
-		free(path_dup);
+		free(path_full);
 	}
 
 	free(path);
-	free(path_full);
 	perror("path not found");
 	return (NULL);
 }
