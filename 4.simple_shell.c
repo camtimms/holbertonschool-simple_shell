@@ -30,12 +30,13 @@ int main(void)
 		if (num_char == -1)
 			break;
 		
-		/* removed newline from line */
+		/* Removed newline char from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
 		
-		/* convert line to array */
+		/* Convert line to array */
 		argv = line_to_arr(line);
+		free(line);
 		if (argv == NULL)
 		{
 			free_arr(argv);
@@ -43,23 +44,22 @@ int main(void)
 			continue;
 		}
 		
-		/* get file path for the command */
+		/* Get file path for the command */
 		command_path = get_path(argv[0]);
 		if (command_path == NULL)
 		{
 			free_arr(argv);
 			free(command_path);
-			free(line);
 			continue;
 		}
 		
-		/* fork process */
+		/* Fork process */
 		child_pid = fork();
 		if (child_pid == -1)
 		{
 			perror("fork failed");
 			free(command_path);
-			free(line);
+			free_arr(argv);
 			return (-1);
 		}
 		if (child_pid == 0)
@@ -72,9 +72,9 @@ int main(void)
 		}
 		else
 			wait(&status);
-
+		
+		/* Free memory for next command */
 		free(command_path);
-		free(line);
 		free_arr(argv);
 	}
 
