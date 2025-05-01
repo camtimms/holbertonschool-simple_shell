@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 		{
 			free_arr(arr_arg);
 			free(line);
-			exit(0);
+			exit(exit_status);
 		}
 
 		/* Get file path for the command */
