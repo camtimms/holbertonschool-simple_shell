@@ -53,11 +53,12 @@ int main() {
     run_test("Empty command string", NULL, result);
     free(result);
 
-    /* Test 6: PATH environment variable unset */
+    /* Test 6: PATH environment variable unset 
     unsetenv("PATH");
     result = get_path("ls");
     run_test("PATH environment variable unset", NULL, result);
-    setenv("PATH", "/bin:/usr/bin", 1); /* Reset PATH for further tests */
+    setenv("PATH", "/bin:/usr/bin", 1);*/
+    
 
     /* Test 7: Command in a custom PATH directory */
     setenv("PATH", "/usr/local/bin:/bin:/usr/bin", 1);

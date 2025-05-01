@@ -106,7 +106,7 @@ char *get_path(char *command)
 	{
 		if (stat(command, &st) == 0)
 		{
-			return(command);
+			return(strdup(command));
 		}
 		return(NULL);
 	}
@@ -115,7 +115,6 @@ char *get_path(char *command)
 	if (path == NULL)
 	{
 		perror("no path input");
-		free(path);
 		return(NULL);
 	}
 

@@ -72,8 +72,5 @@ int main(void)
 		free(line);
 	}
 
-	free_arr(argv);
-	free(line);
-	
 	return (0);
 }
