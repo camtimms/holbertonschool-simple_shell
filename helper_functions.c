@@ -161,6 +161,7 @@ char *get_path(char *command)
 	char *path_dup;
 	char *path_token;
 	char *path_full;
+	char *cmd_dup;
 	struct stat st;
 
 	if (command == NULL || command[0] == '\0')
@@ -172,7 +173,13 @@ char *get_path(char *command)
 	{
 		if (stat(command, &st) == 0)
 		{
-			return(command);
+			cmd_dup = strdup(command);
+			if (cmd_dup == NULL)
+			{
+				perror("cmd_dup failed");
+				return (NULL);
+			}
+			return(cmd_dup);
 		}
 		perror("invalid path");
 		return (NULL);
