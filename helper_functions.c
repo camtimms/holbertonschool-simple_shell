@@ -110,6 +110,7 @@ char *get_path(char *command)
 	if (path == NULL)
 	{
 		perror("no path input");
+		free(path);
 		return(NULL);
 	}
 

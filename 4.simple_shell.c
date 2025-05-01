@@ -32,12 +32,17 @@ int main(void)
 			line[num_char - 1] = '\0';
 
 		argv = line_to_arr(line);
-		if (argv[0] == NULL)
+		if (argv == NULL)
+		{
+			free_arr(argv);
 			continue;
+		}
 
 		command_path = get_path(argv[0]);
 		if (command_path == NULL)
 		{
+			free_arr(argv);
+			free(line);
 			continue;
 		}
 		
@@ -55,11 +60,13 @@ int main(void)
 				perror("execve failed");
 				return (EXIT_FAILURE);
 			}
+			free_arr(argv);
 		}
 		else
+		{
 			wait(&status);
-
-		free_arr(argv);
+			free_arr(argv);
+		}
 	}
 
 	free(line);
