@@ -94,9 +94,9 @@ char *get_path(char *command)
 {
 	char *path;
 	char *path_token;
-	char *path_search;
-	struct stat st:
 	char *path_dup;
+	char *path_search;
+	struct stat st;
 
 	if(command[0] == '/')
 	{
