@@ -28,7 +28,6 @@ int main(int argc, char **argv)
 			printf("$ ");
 		
 		/* Pull line from stdin */
-		line = NULL;
 		num_char = getline(&line, &len, stdin);
 		if (num_char == -1)
 			break;
@@ -48,7 +47,7 @@ int main(int argc, char **argv)
 		command_path = get_path(arr_arg[0]);
 		if (command_path == NULL)
 		{
-			fprintf(stderr, "%s: %d, %s: not found\n", argv[0], line_count, arr_arg[0]);
+			fprintf(stderr, "%s: %d: %s: not found\n", argv[0], line_count, arr_arg[0]);
 			exit_status = 127;
 			free_arr(arr_arg);
 			continue;
@@ -65,7 +64,7 @@ int main(int argc, char **argv)
 		}
 		if (child_pid == 0)
 		{
-			if (execve(command_path, argv, NULL) == -1)
+			if (execve(command_path, arr_arg, NULL) == -1)
 			{
 				perror("execve failed");
 				_exit(1);
