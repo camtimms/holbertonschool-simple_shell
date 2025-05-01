@@ -51,6 +51,7 @@ int main(void)
 		if (child_pid == -1)
 		{
 			perror("fork failed");
+			free(command_path);
 			free(line);
 			return (-1);
 		}
@@ -59,7 +60,9 @@ int main(void)
 			if (execve(command_path, argv, NULL) == -1)
 			{
 				perror("execve failed");
-				return (EXIT_FAILURE);
+				free(command_path);
+				free_arr(argv);
+				return (-1);
 			}
 		}
 		else
