@@ -9,15 +9,18 @@
  * Return: Success (0) or Failure (-1)
  */
 
-int main(void)
+int main(int argc, char **argv)
 {
 	char *line =  NULL;
 	size_t len = 0;
 	int num_char = 0;
 	pid_t child_pid;
 	int status;
-	char **argv = NULL;
+	char **arr_arg = NULL;
 	char *command_path;
+	int line_count = 0;
+	int exit_status = 0;
+	(void)argc;
 
 	while (1)
 	{
@@ -28,31 +31,26 @@ int main(void)
 		line = NULL;
 		num_char = getline(&line, &len, stdin);
 		if (num_char == -1)
-		{
-			free(line);
 			break;
-		}
+
+		line_count++;
 
 		/* Removed newline char from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
 		
 		/* Convert line to array */
-		argv = line_to_arr(line);
-		free(line);
-		if (argv == NULL)
-		{
-			free_arr(argv);
-			free(line);
+		arr_arg = line_to_arr(line);
+		if (arr_arg == NULL)
 			continue;
-		}
 		
 		/* Get file path for the command */
-		command_path = get_path(argv[0]);
+		command_path = get_path(arr_arg[0]);
 		if (command_path == NULL)
 		{
-			free_arr(argv);
-			free(command_path);
+			fprintf(stderr, "%s: %d, %s: not found\n", argv[0], line_count, arr_arg[0]);
+			exit_status = 127;
+			free_arr(arr_arg);
 			continue;
 		}
 		
@@ -62,7 +60,7 @@ int main(void)
 		{
 			perror("fork failed");
 			free(command_path);
-			free_arr(argv);
+			free_arr(arr_arg);
 			return (-1);
 		}
 		if (child_pid == 0)
@@ -70,16 +68,21 @@ int main(void)
 			if (execve(command_path, argv, NULL) == -1)
 			{
 				perror("execve failed");
-				return(-1);
+				_exit(1);
 			}
 		}
 		else
+		{
 			wait(&status);
-		
+			if (WIFEXITED(status))
+				exit_status = WEXITSTATUS(status);
+		}
+
 		/* Free memory for next command */
 		free(command_path);
-		free_arr(argv);
+		free_arr(arr_arg);
 	}
 
-	return (0);
+	free(line);
+	return (exit_status);
 }
