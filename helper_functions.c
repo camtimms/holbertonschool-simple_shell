@@ -132,6 +132,7 @@ char *get_path(char *command)
 		{
 			free(path);
 			free(path_dup);
+			free(path_full);
 			return (NULL);
 		}
 		/* Iniitalize string and form full path */
