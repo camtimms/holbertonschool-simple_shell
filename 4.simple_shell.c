@@ -37,7 +37,7 @@ int main(void)
 		argv = line_to_arr(line);
 		if (argv == NULL)
 		{
-			free_arr(argv);
+			free(argv);
 			free(line);
 			continue;
 		}
@@ -46,7 +46,7 @@ int main(void)
 		command_path = get_path(argv[0]);
 		if (command_path == NULL)
 		{
-			free_arr(argv);
+			free(argv);
 			free(line);
 			continue;
 		}
@@ -71,7 +71,7 @@ int main(void)
 
 
 		free_str(command_path, line, NULL);
-		free_arr(argv);
+		free(argv);
 	}
 
 	return (0);
