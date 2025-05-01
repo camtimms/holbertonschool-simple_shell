@@ -80,6 +80,37 @@ void free_arr(char **argv)
 	free(argv);
 }
 
+extern char **environ;
+
+/**
+ * _getenv - gets the environment variable
+ *
+ * @name: Name of environment variable
+ *
+ * Description: Passed through env until it reaches the matching variable
+ *
+ * Return: value of the variable
+ */
+char *_getenv(char *name)
+{
+	int i = 0;
+	int name_len;
+
+	if (name == NULL)
+		return (NULL);
+
+	name_len = strlen(name);
+
+	while (environ[i] != NULL)
+	{
+		if (strncmp(environ[i], name, name_len) == 0)
+			return(environ[i] + name_len + 1);
+		i++;
+	}
+
+	return(NULL);
+}
+
 /**
 * get_path - finds path from environment
 *
@@ -111,7 +142,7 @@ char *get_path(char *command)
 		return(NULL);
 	}
 
-	path = strdup(getenv("PATH"));
+	path = strdup(_getenv("PATH"));
 	if (path == NULL)
 	{
 		perror("no path input");
