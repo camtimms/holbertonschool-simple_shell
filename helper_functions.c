@@ -122,14 +122,14 @@ char *get_path(char *command)
 		path_dup = strdup(path_token);
 		
 		/* Allocate space for the full file path */
-		path_full = malloc(strlen(path_token) + strlen(command) + 2)
-		if (path_search == NULL)
+		path_full = malloc((strlen(path_token) + strlen(command) + 2)* sizeof(char));
+		if (path_full == NULL)
 		{
 			free(path);
+			free(path_dup);
 			return (NULL);
-		}i
+		}
 		/* Iniitalize string and form full path */
-		path_full[0] = "\0";
 		strcat(path_full, path_dup);
 		strcat(path_full, "/");
 		strcat(path_full, command);
@@ -137,16 +137,17 @@ char *get_path(char *command)
 		/* Check if file exists */
 		if (stat(path_full, &st) == 0)
 		{
+			free(path);
 			free(path_dup);
 			return (path_full);
 		}
 		
 		path_token = strtok(NULL, ":");
 		free(path_dup);
-		free(path_full);
 	}
 
-	free(path_dup);
+	free(path);
+	free(path_full);
 	perror("path not found");
 	return (NULL);
 }
