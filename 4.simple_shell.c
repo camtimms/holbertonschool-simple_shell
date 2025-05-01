@@ -28,8 +28,11 @@ int main(void)
 		line = NULL;
 		num_char = getline(&line, &len, stdin);
 		if (num_char == -1)
+		{
+			free(line);
 			break;
-		
+		}
+
 		/* Removed newline char from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
