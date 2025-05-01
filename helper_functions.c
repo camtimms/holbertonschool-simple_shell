@@ -80,6 +80,31 @@ void free_arr(char **argv)
 	free(argv);
 }
 
+/**
+ * free_str - Frees duplicate strings
+ *
+ * @str: String to free
+ *
+ * Return: void
+ */
+
+void free_str(char *str, ...)
+{
+	va_list args;
+	char *current;
+
+	va_start(args, str);
+	current = str;
+
+	while (current != NULL)
+	{
+		free(current);
+		current = va_arg(args, char *);
+	}
+
+	va_end(args);
+}
+
 extern char **environ;
 
 /**
@@ -180,9 +205,10 @@ char *get_path(char *command)
 			free(path_dup);
 			return (path_full);
 		}
+		free(path_full);
 		
 		path_token = strtok(NULL, ":");
-		free(path_full);
+
 	}
 
 	free(path_dup);
