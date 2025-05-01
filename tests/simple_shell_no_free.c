@@ -36,6 +36,7 @@ int main(void)
 		
 		/* convert line to array */
 		argv = line_to_arr(line);
+		free(line);
 		if (argv == NULL)
 		{
 			continue;
@@ -43,6 +44,7 @@ int main(void)
 		
 		/* get file path for the command */
 		command_path = get_path(argv[0]);
+		printf("command path:%s\n", command_path);
 		if (command_path == NULL)
 		{
 			continue;
@@ -57,8 +59,10 @@ int main(void)
 		}
 		if (child_pid == 0)
 		{
+			printf("execve executed in fork\n");
 			if (execve(command_path, argv, NULL) == -1)
 			{
+				printf("execve command failed\n");
 				perror("execve failed");
 				return(-1);
 			}

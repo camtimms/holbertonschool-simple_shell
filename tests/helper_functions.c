@@ -45,6 +45,7 @@ char **line_to_arr(char *line)
 		}
 
 		arr[i] = strdup(token);
+		printf("arr[%d]: %s address.: %p\n", i, arr[i], arr[i]);
 		if (arr[i] == NULL)
 		{
 			perror("strdup failed");
@@ -163,12 +164,14 @@ char *get_path(char *command)
 	{
 		if (stat(command, &st) == 0)
 		{
+			printf("inside of if stat(command) %s\n", command);
 			return(command);
 		}
+		printf("outside of if stat(command) %s\n", command);
 		perror("invalid path");
 		return (NULL);
 	}
-
+	printf("after command[0] == '/'\n");
 	path = _getenv("PATH");
 	if (path == NULL)
 	{
@@ -198,6 +201,7 @@ char *get_path(char *command)
 		path_full[0] = '\0';
 		strcat(path_full, path_token);
 		strcat(path_full, "/");
+		printf("is this running?? - path_full == NULL\n");
 		strcat(path_full, command);
 		
 		/* Check if file exists */
