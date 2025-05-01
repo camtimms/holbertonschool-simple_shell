@@ -137,7 +137,7 @@ char *get_path(char *command)
 	{
 		if (stat(command, &st) == 0)
 		{
-			return(strdup(command));
+			return(command);
 		}
 		return(NULL);
 	}
