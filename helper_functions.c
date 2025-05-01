@@ -80,6 +80,31 @@ void free_arr(char **argv)
 	free(argv);
 }
 
+/**
+ * free_str - Frees duplicate strings
+ *
+ * @str: String to free
+ *
+ * Return: void
+ */
+
+void free_str(char *str, ...)
+{
+	va_list args;
+	char *current;
+
+	va_start(args, str);
+	current = str;
+
+	while (current != NULL)
+	{
+		free(current);
+		current = va_arg(args, char *);
+	}
+
+	va_end(args);
+}
+
 extern char **environ;
 
 /**
@@ -124,6 +149,7 @@ char *_getenv(char *name)
 char *get_path(char *command)
 {
 	char *path;
+	char *path_dup;
 	char *path_token;
 	char *path_full;
 	struct stat st;
@@ -139,17 +165,25 @@ char *get_path(char *command)
 		{
 			return(command);
 		}
-		return(NULL);
+		perror("invalid path");
+		return (NULL);
 	}
 
-	path = strdup(_getenv("PATH"));
+	path = _getenv("PATH");
 	if (path == NULL)
 	{
 		perror("no path input");
-		return(NULL);
+		return (NULL);
 	}
 
-	path_token = strtok(path, ":");
+	path_dup = strdup(path);
+	if (path_dup == NULL)
+	{
+		perror("strdup failed");
+		return (NULL);
+	}
+
+	path_token = strtok(path_dup, ":");
 
 	while (path_token != NULL)
 	{
@@ -157,7 +191,7 @@ char *get_path(char *command)
 		path_full = malloc((strlen(path_token) + strlen(command) + 2)* sizeof(char));
 		if (path_full == NULL)
 		{
-			free(path);
+			free(path_dup);
 			return (NULL);
 		}
 		/* Iniitalize string and form full path */
@@ -169,15 +203,16 @@ char *get_path(char *command)
 		/* Check if file exists */
 		if (stat(path_full, &st) == 0)
 		{
-			free(path);
+			free(path_dup);
 			return (path_full);
 		}
+		free(path_full);
 		
 		path_token = strtok(NULL, ":");
-		free(path_full);
+
 	}
 
-	free(path);
+	free(path_dup);
 	perror("path not found");
 	return (NULL);
 }
