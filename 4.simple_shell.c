@@ -36,13 +36,12 @@ int main(void)
 			continue;
 
 		command_path = get_path(argv[0]);
-		/*command_path != executable we return to new $input*/
 		if (command_path == NULL)
 		{
 			continue;
 		}
+		
 		child_pid = fork();
-
 		if (child_pid == -1)
 		{
 			perror("fork failed");
