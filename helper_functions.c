@@ -3,75 +3,6 @@
 #include <string.h>
 
 /**
- * line_to_arr - Converts a string/line to an array
- *
- * @line: String/line to tokenise
- *
- * Description: Tokenises each word in a string and sets them to positions in
- * an array
- *
- * Return: Array or failure (NULL)
- */
-
-char **line_to_arr(char *line)
-{
-	int i = 0, j;
-	int arr_size = 2; 
-	char *token;
-	char *line_dup;
-	char **arr = malloc(arr_size * sizeof(char *));
-	char **temp;
-
-	if (arr == NULL)
-	{
-		perror("malloc failed");
-		return (NULL);
-	}
-
-	line_dup = strdup(line);
-	if (line_dup == NULL)
-	{
-		perror("line_dup failed");
-		return (NULL);
-	}
-	
-	token = strtok(line_dup, " ");
-	
-	while (token != NULL)
-	{
-		if (i >= arr_size - 1)
-		{
-			arr_size *= 2;
-			temp = realloc(arr, arr_size * sizeof(char *));
-			if (temp == NULL)
-			{
-				perror("realloc failed");
-				free(arr);
-				return (NULL);
-			}
-			arr = temp;
-		}
-
-		arr[i] = strdup(token);
-		if (arr[i] == NULL)
-		{
-			perror("strdup failed");
-			for (j = 0; j < i; j++)
-				free(arr[j]);
-			free(arr);
-			return (NULL);
-		}
-
-		token = strtok(NULL, " ");
-		i++;
-	}
-
-	free(line_dup);
-	arr[i] = NULL;
-	return (arr);
-}
-
-/**
  * free_arr - Frees an array created by line_to_arr
  *
  * Return: void
@@ -88,6 +19,84 @@ void free_arr(char **argv)
 		free(argv[i]);
 	free(argv);
 }
+
+/**
+ * line_to_arr - Converts a string/line to an array
+ *
+ * @line: String/line to tokenise
+ *
+ * Description: Tokenises each word in a string and sets them to positions in
+ * an array
+ *
+ * Return: Array or failure (NULL)
+ */
+
+char **line_to_arr(char *line)
+{
+	int i = 0, j = 0;
+	int arr_size = 2;
+	int new_size;	
+	char *token;
+	char *line_dup;
+	char **arr = malloc(arr_size * sizeof(char *));
+	char **new_arr;
+
+	if (arr == NULL)
+	{
+		perror("line_to_arr: malloc failed");
+		return (NULL);
+	}
+
+	line_dup = strdup(line);
+	if (line_dup == NULL)
+	{
+		perror("line_to_arr: line_dup failed");
+		return (NULL);
+	}
+	
+	token = strtok(line_dup, " ");
+	
+	while (token != NULL)
+	{
+		if (i >= arr_size - 1)
+		{
+			new_size = arr_size * 2;
+			new_arr = malloc(new_size * sizeof(char *));
+			if (new_arr == NULL)
+			{
+				perror("line_to_arr: malloc failed");
+				for (j = 0; j < i; j++)
+					free(arr[j]);
+				free(arr);
+				free(line_dup);
+				return (NULL);
+			}
+			memcpy(new_arr, arr, arr_size * sizeof(char *));
+			free(arr);
+			arr = new_arr;
+			arr_size = new_size;
+		}
+
+		arr[i] = strdup(token);
+		if (arr[i] == NULL)
+		{
+			perror("line_to_arr: strdup failed");
+			for (j = 0; j < i; j++)
+				free(arr[j]);
+			free(arr);
+			free(line_dup);
+			return (NULL);
+		}
+
+		token = strtok(NULL, " ");
+		i++;
+	}
+
+	free(line_dup);
+	arr[i] = NULL;
+	return (arr);
+}
+
 
 /**
  * free_str - Frees duplicate strings
