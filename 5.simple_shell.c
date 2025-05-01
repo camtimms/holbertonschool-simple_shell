@@ -47,6 +47,7 @@ int main(int argc, char **argv)
 		if (arr_arg[0] == NULL)
 		{
 			free_arr(arr_arg);
+			free(line);
 			continue;
 		}
 
