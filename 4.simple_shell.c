@@ -23,14 +23,17 @@ int main(void)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
-
+		
+		/* Pull line from stdin */
 		num_char = getline(&line, &len, stdin);
 		if (num_char == -1)
 			break;
-
+		
+		/* removed newline from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
-
+		
+		/* convert line to array */
 		argv = line_to_arr(line);
 		if (argv == NULL)
 		{
@@ -38,7 +41,8 @@ int main(void)
 			free(line);
 			continue;
 		}
-
+		
+		/* get file path for the command */
 		command_path = get_path(argv[0]);
 		if (command_path == NULL)
 		{
@@ -72,8 +76,5 @@ int main(void)
 		free(line);
 	}
 
-	free_arr(argv);
-	free(line);
-	
 	return (0);
 }
