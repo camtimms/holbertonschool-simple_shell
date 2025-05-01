@@ -181,11 +181,8 @@ char *get_path(char *command)
 		if (access(command, X_OK) == 0)
 		{
 			cmd_dup = strdup(command);
-			if (cmd_dup == NULL)
-				/* perror("get_path: cmd_dup failed"); */
 			return(cmd_dup);
 		}
-		perror("get_path: invalid path");
 		return (NULL);
 	}
 
@@ -195,10 +192,7 @@ char *get_path(char *command)
 		return (NULL);
 	path_dup = strdup(path);
 	if (path_dup == NULL)
-	{
-		/* perror("get_path: path_dup failed"); */
 		return (NULL);
-	}
 
 	path_token = strtok(path_dup, ":");
 
@@ -233,6 +227,5 @@ char *get_path(char *command)
 	}
 
 	free(path_dup);
-	/* perror("path not found"); */
 	return (NULL);
 }
