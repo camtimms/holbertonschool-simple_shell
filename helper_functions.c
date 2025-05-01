@@ -18,6 +18,7 @@ char **line_to_arr(char *line)
 	int i = 0, j;
 	int arr_size = 2; 
 	char *token;
+	char *line_dup;
 	char **arr = malloc(arr_size * sizeof(char *));
 	char **temp;
 
@@ -27,7 +28,14 @@ char **line_to_arr(char *line)
 		return (NULL);
 	}
 
-	token = strtok(line, " ");
+	line_dup = strdup(line);
+	if (line_dup == NULL)
+	{
+		perror("line_dup failed");
+		return (NULL);
+	}
+	
+	token = strtok(line_dup, " ");
 	
 	while (token != NULL)
 	{
@@ -58,6 +66,7 @@ char **line_to_arr(char *line)
 		i++;
 	}
 
+	free(line_dup);
 	arr[i] = NULL;
 	return (arr);
 }
