@@ -35,6 +35,7 @@ int main(void)
 		if (argv == NULL)
 		{
 			free_arr(argv);
+			free(line);
 			continue;
 		}
 
@@ -60,15 +61,16 @@ int main(void)
 				perror("execve failed");
 				return (EXIT_FAILURE);
 			}
-			free_arr(argv);
 		}
 		else
-		{
 			wait(&status);
-			free_arr(argv);
-		}
+
+		free_arr(argv);
+		free(line);
 	}
 
+	free_arr(argv);
 	free(line);
+	
 	return (0);
 }
