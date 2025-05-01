@@ -157,45 +157,37 @@ char *_getenv(char *name)
 */
 char *get_path(char *command)
 {
-	char *path;
-	char *path_dup;
-	char *path_token;
-	char *path_full;
+	char *path, *path_dup, *path_token, *path_full;
 	char *cmd_dup;
-	struct stat st;
+	size_t buff_size;
 
+	/* Check for NULL input */
 	if (command == NULL || command[0] == '\0')
-	{
 		return (NULL);
-	}
 
-	if(command[0] == '/')
+	/* Check for slashes in command */
+	if(strchr(command, '/') != NULL)
 	{
-		if (stat(command, &st) == 0)
+		/* Check if command exists and is executable */
+		if (access(command, X_OK) == 0)
 		{
 			cmd_dup = strdup(command);
 			if (cmd_dup == NULL)
-			{
-				perror("cmd_dup failed");
-				return (NULL);
-			}
+				perror("get_path: cmd_dup failed");
 			return(cmd_dup);
 		}
-		perror("invalid path");
+		perror("get_path: invalid path");
 		return (NULL);
 	}
 
+	/* Get path string from env */
 	path = _getenv("PATH");
-	if (path == NULL)
-	{
-		perror("no path input");
+	if (path == NULL || *path == '\0')
 		return (NULL);
-	}
-
 	path_dup = strdup(path);
 	if (path_dup == NULL)
 	{
-		perror("strdup failed");
+		perror("get_path: path_dup failed");
 		return (NULL);
 	}
 
@@ -204,7 +196,9 @@ char *get_path(char *command)
 	while (path_token != NULL)
 	{
 		/* Allocate space for the full file path */
-		path_full = malloc((strlen(path_token) + strlen(command) + 2)* sizeof(char));
+		/* E.g: dir + / + command + \0 */ 
+		buff_size = strlen(path_token) + 1 + strlen(command) + 1;
+		path_full = malloc(buff_size);
 		if (path_full == NULL)
 		{
 			free(path_dup);
@@ -217,13 +211,14 @@ char *get_path(char *command)
 		strcat(path_full, command);
 		
 		/* Check if file exists */
-		if (stat(path_full, &st) == 0)
+		if (access(path_full, X_OK) == 0)
 		{
 			free(path_dup);
 			return (path_full);
 		}
+
+		/* Move to next path */
 		free(path_full);
-		
 		path_token = strtok(NULL, ":");
 
 	}
