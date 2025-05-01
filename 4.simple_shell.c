@@ -32,20 +32,26 @@ int main(void)
 			line[num_char - 1] = '\0';
 
 		argv = line_to_arr(line);
-		if (argv[0] == NULL)
-			continue;
-
-		command_path = get_path(argv[0]);
-		/*command_path != executable we return to new $input*/
-		if (command_path == NULL)
+		if (argv == NULL)
 		{
+			free_arr(argv);
+			free(line);
 			continue;
 		}
-		child_pid = fork();
 
+		command_path = get_path(argv[0]);
+		if (command_path == NULL)
+		{
+			free_arr(argv);
+			free(line);
+			continue;
+		}
+		
+		child_pid = fork();
 		if (child_pid == -1)
 		{
 			perror("fork failed");
+			free(command_path);
 			free(line);
 			return (-1);
 		}
@@ -54,15 +60,20 @@ int main(void)
 			if (execve(command_path, argv, NULL) == -1)
 			{
 				perror("execve failed");
-				return (EXIT_FAILURE);
+				free(command_path);
+				free_arr(argv);
+				return (-1);
 			}
 		}
 		else
 			wait(&status);
 
 		free_arr(argv);
+		free(line);
 	}
 
+	free_arr(argv);
 	free(line);
+	
 	return (0);
 }
