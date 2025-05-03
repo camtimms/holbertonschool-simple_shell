@@ -5,7 +5,7 @@ A basic UNIX command line interpreter (shell) written in C. This shell accepts a
 ## Installation:
 To run the shell, use `git clone https://github.com/camtimms/holbertonschool-simple_shell.git`
 
-## How to Compile
+## How to compile
 
 `gcc -Wall -Werror -Wextra -pedantic *.c -o hsh`
 
