@@ -2,7 +2,7 @@
 
 A basic UNIX command line interpreter (shell) written in C. This shell accepts and executes user commands similarly to `/bin/sh`.
 
-##Installation:
+## Installation:
 To run the shell, use `git clone https://github.com/camtimms/holbertonschool-simple_shell.git`
 
 ## How to Compile
@@ -23,7 +23,7 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 - Executes valid commands via `fork` and `execve`.
 - Memory-safe implementation using dynamic memory allocation and deallocation.
 
-##Exiting the shell
+## Exiting the shell
 - Exiting can be done via the `exit` builtin functoin.
 - Or through `Ctrl + C` shortcut.
 
@@ -34,6 +34,6 @@ simple_shell.c      |
 helper_functions.c  |  
 main.h              |  
 
-##Authors
+## Authors
 - Bevan Tan  |  https://github.com/Aldore-88/
 - Cam Timms  |  https://github.com/camtimms/
