@@ -35,6 +35,11 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 - main.h              |  
 
 ## Examples
+Interactive Mode
+./hsh
+
+Non-Interactive Mode
+echo "/bin/ls" | ./hsh
 
 ## Limitations
 
