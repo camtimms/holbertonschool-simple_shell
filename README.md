@@ -35,6 +35,6 @@ helper_functions.c  |
 main.h              |  
 
 ##Authors:
+Bevan Tan  |  https://github.com/Aldore-88/
 
-Bevan Tan  |  "https://github.com/Aldore-88/"
-Cam Timms  |  "https://github.com/camtimms/"
+Cam Timms  |  https://github.com/camtimms/
