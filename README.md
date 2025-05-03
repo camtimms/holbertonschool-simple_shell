@@ -29,10 +29,14 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 
 ## Files
 
-README.md           |  Readme file, containing information about this project
-simple_shell.c      |  
-helper_functions.c  |  
-main.h              |  
+- README.md           |  Readme file, containing information about this project
+- simple_shell.c      |  
+- helper_functions.c  |  
+- main.h              |  
+
+## Examples
+
+## Limitations
 
 ## Authors
 - Bevan Tan  |  https://github.com/Aldore-88/
