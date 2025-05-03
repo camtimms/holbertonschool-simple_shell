@@ -5,19 +5,23 @@
 /**
  * free_arr - Frees an array created by line_to_arr
  *
+ * @arr: Array to free
+ *
+ * Description: Frees a array of pointers
+ *
  * Return: void
  */
 
-void free_arr(char **argv)
+void free_arr(char **arr)
 {
 	int i;
 
-	if (argv == NULL)
+	if (arr == NULL)
 		return;
 
-	for (i = 0; argv[i] != NULL; i++)
-		free(argv[i]);
-	free(argv);
+	for (i = 0; arr[i] != NULL; i++)
+		free(arr[i]);
+	free(arr);
 }
 
 /**
@@ -35,7 +39,7 @@ char **line_to_arr(char *line)
 {
 	int i = 0, j = 0;
 	int arr_size = 2;
-	int new_size;	
+	int new_size;
 	char *token;
 	char *line_dup;
 	char **arr = malloc(arr_size * sizeof(char *));
@@ -53,9 +57,9 @@ char **line_to_arr(char *line)
 		perror("line_to_arr: line_dup failed");
 		return (NULL);
 	}
-	
+
 	token = strtok(line_dup, " ");
-	
+
 	while (token != NULL)
 	{
 		if (i >= arr_size - 1)
@@ -123,8 +127,6 @@ void free_str(char *str, ...)
 	va_end(args);
 }
 
-extern char **environ;
-
 /**
  * _getenv - gets the environment variable
  *
@@ -147,11 +149,11 @@ char *_getenv(char *name)
 	while (environ[i] != NULL)
 	{
 		if (strncmp(environ[i], name, name_len) == 0)
-			return(environ[i] + name_len + 1);
+			return (environ[i] + name_len + 1);
 		i++;
 	}
 
-	return(NULL);
+	return (NULL);
 }
 
 /**
@@ -159,8 +161,8 @@ char *_getenv(char *name)
 *
 * @command: input command
 *
-* Description: tokenises the path from the env, 
-* then checks the command input against the paths using stat
+* Description: Tokenises the path from the env, then checks the command input
+* against the paths using stat.
 *
 * Return: command path or NULL(fail)
 */
@@ -175,13 +177,13 @@ char *get_path(char *command)
 		return (NULL);
 
 	/* Check for slashes in command */
-	if(strchr(command, '/') != NULL)
+	if (strchr(command, '/') != NULL)
 	{
 		/* Check if command exists and is executable */
 		if (access(command, X_OK) == 0)
 		{
 			cmd_dup = strdup(command);
-			return(cmd_dup);
+			return (cmd_dup);
 		}
 		return (NULL);
 	}
@@ -199,7 +201,7 @@ char *get_path(char *command)
 	while (path_token != NULL)
 	{
 		/* Allocate space for the full file path */
-		/* E.g: dir + / + command + \0 */ 
+		/* E.g: dir + / + command + \0 */
 		buff_size = strlen(path_token) + 1 + strlen(command) + 1;
 		path_full = malloc(buff_size);
 		if (path_full == NULL)
@@ -212,7 +214,7 @@ char *get_path(char *command)
 		strcat(path_full, path_token);
 		strcat(path_full, "/");
 		strcat(path_full, command);
-		
+
 		/* Check if file exists */
 		if (access(path_full, X_OK) == 0)
 		{

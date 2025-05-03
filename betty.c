@@ -3,9 +3,6 @@
 /**
  * main - Simple Shell
  *
- * @argc: Argument count
- * @argv: Argument vector
- *
  * Description: Super Simple Shell that can run commands with their full path,
  * without any argument.
  *
@@ -41,7 +38,7 @@ int main(int argc, char **argv)
 		/* Removed newline char from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
-
+		
 		/* Convert line to array */
 		arr_arg = line_to_arr(line);
 		if (arr_arg == NULL)
@@ -67,7 +64,7 @@ int main(int argc, char **argv)
 		{
 			for (i = 0; environ[i] != NULL; i++)
 				printf("%s\n", environ[i]);
-
+			
 			free_arr(arr_arg);
 			continue;
 		}
@@ -82,36 +79,3 @@ int main(int argc, char **argv)
 			free_arr(arr_arg);
 			continue;
 		}
-
-		/* Fork process */
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			perror("fork failed");
-			free(command_path);
-			free_arr(arr_arg);
-			return (-1);
-		}
-		if (child_pid == 0)
-		{
-			if (execve(command_path, arr_arg, NULL) == -1)
-			{
-				perror("execve failed");
-				_exit(1);
-			}
-		}
-		else
-		{
-			wait(&status);
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
-		}
-
-		/* Free memory for next command */
-		free(command_path);
-		free_arr(arr_arg);
-	}
-
-	free(line);
-	return (exit_status);
-}
