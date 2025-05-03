@@ -34,7 +34,6 @@ simple_shell.c      |
 helper_functions.c  |  
 main.h              |  
 
-##Authors:
-Bevan Tan  |  https://github.com/Aldore-88/
-
-Cam Timms  |  https://github.com/camtimms/
+##Authors
+- Bevan Tan  |  https://github.com/Aldore-88/
+- Cam Timms  |  https://github.com/camtimms/
