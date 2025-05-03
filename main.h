@@ -15,6 +15,7 @@ char *remove_traling_spaces(char *);
 char **line_to_arr(char *);
 void free_arr(char **);
 char *get_path(char *);
+extern char **environ;
 char *_getenv(char *);
 void free_str(char *, ...);
 

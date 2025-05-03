@@ -1,9 +1,10 @@
 #include "main.h"
 
-extern char **environ;
-
 /**
  * main - Simple Shell
+ *
+ * @argc: Argument count
+ * @argv: Argument vector
  *
  * Description: Super Simple Shell that can run commands with their full path,
  * without any argument.
@@ -29,7 +30,7 @@ int main(int argc, char **argv)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
-		
+
 		/* Pull line from stdin */
 		num_char = getline(&line, &len, stdin);
 		if (num_char == -1)
@@ -40,7 +41,7 @@ int main(int argc, char **argv)
 		/* Removed newline char from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
-		
+
 		/* Convert line to array */
 		arr_arg = line_to_arr(line);
 		if (arr_arg == NULL)
@@ -66,7 +67,7 @@ int main(int argc, char **argv)
 		{
 			for (i = 0; environ[i] != NULL; i++)
 				printf("%s\n", environ[i]);
-			
+
 			free_arr(arr_arg);
 			continue;
 		}
@@ -81,7 +82,7 @@ int main(int argc, char **argv)
 			free_arr(arr_arg);
 			continue;
 		}
-		
+
 		/* Fork process */
 		child_pid = fork();
 		if (child_pid == -1)
