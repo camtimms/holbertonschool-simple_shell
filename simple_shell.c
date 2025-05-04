@@ -30,6 +30,7 @@ char *process_command(char **arr_arg, int *exit_status, int *line_count,
 	if (strcmp(arr_arg[0], "exit") == 0)
 	{
 		free_arr(arr_arg);
+		free(*line);
 		exit(*exit_status);
 	}
 	/* Check for env command */
@@ -52,7 +53,7 @@ char *process_command(char **arr_arg, int *exit_status, int *line_count,
 	if (skip == 1)
 	{
 		free_arr(arr_arg);
-		free(line);
+		free(*line);
 		*line = NULL;
 		*len = 0;
 		(*line_count)++;
