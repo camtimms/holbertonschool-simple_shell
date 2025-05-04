@@ -28,10 +28,10 @@ char *process_command(char **arr_arg, int *exit_status,
 	/* Check for exit command */
 	if (strcmp(arr_arg[0], "exit") == 0)
 	{
-		*exit_status = 2;
+		*exit_status = 0;
 		free_arr(arr_arg);
 		free(line);
-		exit(0);
+		exit(*exit_status);
 	}
 	/* Check for env command */
 	if (strcmp(arr_arg[0], "env") == 0)
