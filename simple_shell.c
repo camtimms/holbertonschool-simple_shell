@@ -29,7 +29,6 @@ char *process_command(char **arr_arg, int *exit_status,
 	if (strcmp(arr_arg[0], "exit") == 0)
 	{
 		free_arr(arr_arg);
-		free(line);
 		exit(*exit_status);
 	}
 	/* Check for env command */
