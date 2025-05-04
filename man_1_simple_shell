@@ -1,6 +1,6 @@
 .TH simple_shell 1 "April 2025" "Version 1.0"
 
-simple_shell \- a simple shell for executing basic commands
+simple_shell - a simple shell for executing basic commands
 .SH DESCRIPTION
 .B simple_shell is a simple shell written in C that reads user input and executes commands. It supports:
 .PP
