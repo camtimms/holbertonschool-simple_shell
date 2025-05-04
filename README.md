@@ -38,7 +38,7 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 
 ## Examples
 ### Interactive Mode
-./hsh /
+./hsh
 ```
 root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# ./hsh
 $ ls -la
@@ -91,7 +91,7 @@ root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell#
 ```
 
 ### Non-Interactive Mode
-echo "/bin/ls" | ./hsh /
+echo "/bin/ls -la /root" | ./hsh
 ```
 root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# echo "/bin/ls -la /root" | ./hsh
 total 52
