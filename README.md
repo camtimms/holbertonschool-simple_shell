@@ -43,6 +43,10 @@ echo "/bin/ls" | ./hsh
 
 ## Limitations
 
+
+## Checking the man page
+++++ Add man page and input command for man page
+
 ## Authors
 - Bevan Tan  |  https://github.com/Aldore-88/
 - Cam Timms  |  https://github.com/camtimms/
