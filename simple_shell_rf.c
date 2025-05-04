@@ -6,6 +6,8 @@
  * @arr_arg: Array of arguments from stdin
  * @exit_status: Pointer to the exit_status variable
  *
+ * Description: Handles the checks for the built in commands like exit and env
+ *
  * Return: 1 to skip execution, 0 no custom command, -1 exits the shell
  */
 
@@ -37,6 +39,48 @@ int custom_command(char **arr_arg, int *exit_status)
 }
 
 /**
+ * execute_command - Handles the command execution with fork + execve
+ *
+ * @arr_arg: Array of arguments from stdin
+ * @command_path: Path to the command
+ * @exit_status Pointer to the exit_status variable
+ *
+ * Description: Executes the command given by command path in a child process
+ *
+ * Return: void
+ */
+
+void execute_command(char **arr_arg, char *command_path, int *exit_status)
+{
+	pid_t child_pid;
+	int child_status;
+
+	/* Fork process */
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		perror("fork failed");
+		free(command_path);
+		free_arr(arr_arg);
+		exit(-1);
+	}
+	if (child_pid == 0)
+	{
+		if (execve(command_path, arr_arg, NULL) == -1)
+		{
+			perror("execve failed");
+			_exit(1);
+		}
+	}
+	else
+	{
+		wait(&child_status);
+		if (WIFEXITED(child_status))
+			*exit_status = WEXITSTATUS(child_status);
+	}
+}
+
+/**
  * main - Simple Shell
  *
  * @argc: Argument count
@@ -54,8 +98,7 @@ int main(int argc, char **argv)
 	char **arr_arg = NULL;
 	int num_char = 0, line_count = 1, exit_status = 0;
 	size_t len = 0;
-	int child_status, cmd_status;
-	pid_t child_pid;
+	int cmd_status;
 	(void)argc;
 
 	while (1)
@@ -107,28 +150,7 @@ int main(int argc, char **argv)
 		}
 
 		/* Fork process */
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			perror("fork failed");
-			free(command_path);
-			free_arr(arr_arg);
-			return (-1);
-		}
-		if (child_pid == 0)
-		{
-			if (execve(command_path, arr_arg, NULL) == -1)
-			{
-				perror("execve failed");
-				_exit(1);
-			}
-		}
-		else
-		{
-			wait(&child_status);
-			if (WIFEXITED(child_status))
-				exit_status = WEXITSTATUS(child_status);
-		}
+		execute_command(arr_arg, command_path, &exit_status);
 
 		/* Free memory for next command */
 		free(command_path);
