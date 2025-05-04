@@ -8,6 +8,7 @@
  * @line_count: Keeps track of the number of lines executed
  * @argv: Program name and it's arguments
  * @line: String of the full input
+ * @len: Length of the line
  *
  * Description: Handles the checks for the built in commands like exit and env.
  * If the command is valid it then checks if it can find a path to the command
@@ -16,8 +17,8 @@
  * Return: Command path on success or NULL on failure
  */
 
-char *process_command(char **arr_arg, int *exit_status,
-			int *line_count, char **argv, char *line)
+char *process_command(char **arr_arg, int *exit_status, int *line_count,
+			char **argv, char **line, size_t *len)
 {
 	int i = 0, skip = 0;
 	char *command_path;
@@ -52,6 +53,8 @@ char *process_command(char **arr_arg, int *exit_status,
 	{
 		free_arr(arr_arg);
 		free(line);
+		*line = NULL;
+		*len = 0;
 		(*line_count)++;
 		return (NULL);
 	}
@@ -141,7 +144,7 @@ int main(int argc, char **argv)
 		}
 		/* Process the array and find the path to the correct command */
 		command_path = process_command(arr_arg, &exit_status,
-			&line_count, argv, line);
+			&line_count, argv, &line, &len);
 		if (command_path == NULL)
 			continue;
 		/* Execute the command by forking the process */
