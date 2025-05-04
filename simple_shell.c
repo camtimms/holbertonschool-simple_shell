@@ -16,7 +16,7 @@
  */
 
 char *process_command(char **arr_arg, int *exit_status,
-			int *line_count, char **argv)
+			int *line_count, char **argv, char *line)
 {
 	int i = 0;
 	char *command_path;
@@ -33,6 +33,7 @@ char *process_command(char **arr_arg, int *exit_status,
 	{
 		*exit_status = 0;
 		free_arr(arr_arg);
+		free(line);
 		exit(0);
 	}
 
@@ -144,7 +145,8 @@ int main(int argc, char **argv)
 			continue;
 		}
 		/* Process the array and find the path to the correct command */
-		command_path = process_command(arr_arg, &exit_status, &line_count, argv);
+		command_path = process_command(arr_arg, &exit_status,
+			       	&line_count, argv, line);
 		if (command_path == NULL)
 			continue;
 		/* Execute the command by forking the process */
