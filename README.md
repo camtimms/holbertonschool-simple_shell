@@ -29,10 +29,10 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 
 ## Files
 
-- README.md           |  Readme file, containing information about this project
-- simple_shell.c      |  
-- helper_functions.c  |  
-- main.h              |  
+- README.md           |  Readme file, containing information about this project.
+- simple_shell.c      |  Main file of the project, uses most functions for executing the program.
+- helper_functions.c  |  Contains the helping functions that are called in `main`.
+- main.h              |  Header file containing the funciton declarations and libraries used.
 
 ## Examples
 ### Interactive Mode
