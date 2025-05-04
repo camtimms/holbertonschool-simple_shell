@@ -38,13 +38,56 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 
 ## Examples
 ### Interactive Mode
-./hsh
-![Screenshot 2025-05-05 083751](https://github.com/user-attachments/assets/9d918994-5861-4316-a39f-d1c16c222d44)
-
+./hsh /
+```
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# echo "/bin/ls -la /usr" | ./hsh
+total 96256
+drwxr-xr-x  1 root root     4096 Mar  7 11:22 .
+drwxr-xr-x  1 root root     4096 May  4 04:17 ..
+drwxr-xr-x  1 root root    12288 May  4 07:16 bin
+drwxr-xr-x 93 1001  118     4096 Feb 28 10:43 extensions
+drwxr-xr-x  2 root root     4096 Apr 18  2022 games
+drwxr-xr-x  1 root root     4096 May  4 07:16 include
+drwxr-xr-x  1 root root     4096 May  4 07:15 lib
+drwxr-xr-x  1 root root     4096 Mar  7 11:23 lib32
+drwxr-xr-x  1 root root     4096 Mar  3 13:36 lib64
+drwxr-xr-x  1 root root     4096 Mar  7 11:23 libexec
+drwxr-xr-x  2 root root     4096 Jan 26 02:05 libx32
+drwxr-xr-x  1 root root     4096 Jan 26 02:05 local
+-rwxr-xr-x  1 1001  118 98426952 Feb 28 10:43 node
+drwxr-xr-x 93 1001  118     4096 Feb 28 10:43 node_modules
+drwxr-xr-x  4 1001  118     4096 Feb 28 10:43 out
+-rw-r--r--  1 1001  118      210 Feb 28 09:45 package.json
+-rw-r--r--  1 1001  118    22891 Feb 28 09:48 product.json
+drwxr-xr-x  3 1001  118     4096 Feb 28 10:43 resources
+drwxr-xr-x  1 root root     4096 May  4 07:16 sbin
+drwxr-xr-x  1 root root     4096 Mar  7 11:23 share
+drwxr-xr-x  1 root root     4096 Mar  7 11:22 src
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell#
+```
 
 ### Non-Interactive Mode
-echo "/bin/ls" | ./hsh
-<img width="799" alt="image" src="https://github.com/user-attachments/assets/b8fe7bac-858c-4e5b-a28c-72644dbf78ff" />
+echo "/bin/ls" | ./hsh /
+```
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# echo "/bin/ls -la /root" | ./hsh
+total 52
+drwx------ 1 root root 4096 May  4 15:27 .
+drwxr-xr-x 1 root root 4096 May  4 04:17 ..
+-rw------- 1 root root  625 May  4 16:28 .bash_history
+-rw-r--r-- 1 root root 3106 Oct 15  2021 .bashrc
+drwxr-xr-x 1 root root 4096 May  4 06:54 .cache
+-rw-r--r-- 1 root root   52 May  4 15:27 .gitconfig
+drwx------ 4 root root 4096 May  4 04:17 .openvscode-server
+-rw-r--r-- 1 root root  161 Jul  9  2019 .profile
+-rw------- 1 root root 1840 May  4 07:22 .viminfo
+drwxr-xr-x 2 root root 4096 Mar  7 11:23 empty_directory
+drwxr-xr-x 6 root root 4096 May  4 22:35 holbertonschool-simple_shell
+-rw-r--r-- 1 root root    0 Mar  7 11:23 not_here
+-rw-r--r-- 1 root root    0 Mar  7 11:23 old_school
+-rw-r--r-- 1 root root    0 Mar  7 11:23 ready_to_be_removed
+-rw-r--r-- 1 root root   13 Mar  7 11:23 school
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell#
+```
 
 ## Limitations
 
