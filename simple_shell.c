@@ -7,6 +7,7 @@
  * @exit_status: Pointer to the exit_status variable
  * @line_count: Keeps track of the number of lines executed
  * @argv: Program name and it's arguments
+ * @line: String of the full input
  *
  * Description: Handles the checks for the built in commands like exit and env.
  * If the command is valid it then checks if it can find a path to the command
@@ -27,7 +28,6 @@ char *process_command(char **arr_arg, int *exit_status,
 		free_arr(arr_arg);
 		return (NULL);
 	}
-
 	/* Check for exit command */
 	if (strcmp(arr_arg[0], "exit") == 0)
 	{
@@ -36,7 +36,6 @@ char *process_command(char **arr_arg, int *exit_status,
 		free(line);
 		exit(0);
 	}
-
 	/* Check for env command */
 	if (strcmp(arr_arg[0], "env") == 0)
 	{
@@ -47,7 +46,6 @@ char *process_command(char **arr_arg, int *exit_status,
 		(*line_count)++;
 		return (NULL);
 	}
-
 	/* Get file path for the command */
 	command_path = get_path(arr_arg[0]);
 	if (command_path == NULL)
@@ -59,7 +57,6 @@ char *process_command(char **arr_arg, int *exit_status,
 		(*line_count)++;
 		return (NULL);
 	}
-
 	return (command_path);
 }
 
@@ -146,7 +143,7 @@ int main(int argc, char **argv)
 		}
 		/* Process the array and find the path to the correct command */
 		command_path = process_command(arr_arg, &exit_status,
-			       	&line_count, argv, line);
+			&line_count, argv, line);
 		if (command_path == NULL)
 			continue;
 		/* Execute the command by forking the process */
