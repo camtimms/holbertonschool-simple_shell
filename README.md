@@ -14,6 +14,7 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 ## Features
 
 - Interactive mode: prompts for user input with `$ ` and executes if a valid command is entered.
+- Alternative non-interavtive mode: entering echo into the executable `echo ls | ./hsh`
 - Built-in commands:
   - `exit`: exits the shell with the last returned status.
   - `env`: prints the current environment.
