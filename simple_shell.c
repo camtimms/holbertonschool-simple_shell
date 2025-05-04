@@ -19,15 +19,12 @@
 char *process_command(char **arr_arg, int *exit_status,
 			int *line_count, char **argv, char *line)
 {
-	int i = 0;
+	int i = 0, skip = 0;
 	char *command_path;
 
 	/* Check if user entered empty command */
 	if (arr_arg[0] == NULL)
-	{
-		free_arr(arr_arg);
-		return (NULL);
-	}
+		skip = 1;
 	/* Check for exit command */
 	if (strcmp(arr_arg[0], "exit") == 0)
 	{
@@ -42,9 +39,7 @@ char *process_command(char **arr_arg, int *exit_status,
 		for (i = 0; environ[i] != NULL; i++)
 			printf("%s\n", environ[i]);
 		*exit_status = 0;
-		free_arr(arr_arg);
-		(*line_count)++;
-		return (NULL);
+		skip = 1;
 	}
 	/* Get file path for the command */
 	command_path = get_path(arr_arg[0]);
@@ -53,7 +48,12 @@ char *process_command(char **arr_arg, int *exit_status,
 		fprintf(stderr, "%s: %d: %s: not found\n",
 			argv[0], *line_count, arr_arg[0]);
 		*exit_status = 127;
+		skip = 1;
+	}
+	if (skip == 1)
+	{
 		free_arr(arr_arg);
+		free(line);
 		(*line_count)++;
 		return (NULL);
 	}
