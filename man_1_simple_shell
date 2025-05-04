@@ -1,0 +1,40 @@
+.TH simple_shell 1 "April 2025" "Version 1.0"
+
+simple_shell - a simple shell for executing basic commands
+.SH DESCRIPTION
+.B simple_shell is a simple shell written in C that reads user input and executes commands. It supports:
+.PP
+- Executing programs with or without the full path
+.br
+- Built-in commands such as \fBexit\fR and \fBenv\fR
+.br
+- Basic PATH resolution
+
+.PP
+This shell does not support advanced features such as piping, redirection, or background processes.
+.PP
+Limitations include:
+.br
+- Does not handle special characters such as: \fB"\fR, \fB'\fR, \fB`\fR, \fB\\\fR, \fB*\fR, \fB&\fR, \fB#\fR
+.br
+- Does not support cursor movement
+
+.SH USAGE
+When run interactively, the shell presents a prompt (\fB$\fR). Users can enter commands like:
+.PP
+.EX
+$ ls
+$ /bin/echo Hello
+$ exit
+.EE
+
+.SH EXIT STATUS
+Returns 0 on success, or 127 if a command is not found or cannot be executed.
+
+.SH BUGS
+This shell is intended for educational purposes. It does not implement full input validation and may behave unexpectedly for malformed inputs.
+
+.SH AUTHORS
+Bevan Tan
+Cam Timms
+
