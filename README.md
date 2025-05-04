@@ -41,6 +41,10 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 ./hsh
 ```
 root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# ./hsh
+$ pwd
+/root/holbertonschool-simple_shell
+$ ls
+README.md  complete_shell  exercises  helper_functions.c  hsh  main.h  simple_shell  simple_shell.c  tests
 $ ls -la
 total 84
 drwxr-xr-x 6 root root  4096 May  4 22:35 .
@@ -56,7 +60,7 @@ drwxr-xr-x 2 root root  4096 May  4 07:00 exercises
 -rw-r--r-- 1 root root  3607 May  4 22:35 simple_shell.c
 drwxr-xr-x 2 root root  4096 May  4 22:35 tests
 $ exit
-root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# 
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell#
 ```
 env
 ```
