@@ -120,9 +120,8 @@ root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell#
 ## Limitations
 This is a project from Holberton School to create a simple shell, full functionalities are not all fleshed out and are following the below critera:
 
-## Project Requirements
-###Requirements
-####General
+### Project Requirements
+#### General
 - Allowed editors: vi, vim, emacs
 - All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
 - All your files should end with a new line
@@ -133,7 +132,7 @@ This is a project from Holberton School to create a simple shell, full functiona
 - All your header files should be include guarded
 - Use system calls only when you need to (why?)
 
-## Project Tasks
+### Project Tasks
 
 #### 0. README, man, AUTHORS
 
