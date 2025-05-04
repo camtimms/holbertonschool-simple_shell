@@ -45,7 +45,8 @@ echo "/bin/ls" | ./hsh
 
 
 ## Checking the man page
-++++ Add man page and input command for man page
+To see the man page for this file type the following into the command line:
+`man ./man_1_simple_shell` ++++ Add man page and input command for man page`
 
 ## Authors
 - Bevan Tan  |  https://github.com/Aldore-88/
