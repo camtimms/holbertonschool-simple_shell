@@ -23,7 +23,10 @@ char *process_command(char **arr_arg, int *exit_status,
 
 	/* Check if user entered empty command */
 	if (arr_arg[0] == NULL)
+	{
+		free_arr(arr_arg);
 		return (NULL);
+	}
 
 	/* Check for exit command */
 	if (strcmp(arr_arg[0], "exit") == 0)
