@@ -40,30 +40,23 @@ To run the shell, use `git clone https://github.com/camtimms/holbertonschool-sim
 ### Interactive Mode
 ./hsh /
 ```
-root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# echo "/bin/ls -la /usr" | ./hsh
-total 96256
-drwxr-xr-x  1 root root     4096 Mar  7 11:22 .
-drwxr-xr-x  1 root root     4096 May  4 04:17 ..
-drwxr-xr-x  1 root root    12288 May  4 07:16 bin
-drwxr-xr-x 93 1001  118     4096 Feb 28 10:43 extensions
-drwxr-xr-x  2 root root     4096 Apr 18  2022 games
-drwxr-xr-x  1 root root     4096 May  4 07:16 include
-drwxr-xr-x  1 root root     4096 May  4 07:15 lib
-drwxr-xr-x  1 root root     4096 Mar  7 11:23 lib32
-drwxr-xr-x  1 root root     4096 Mar  3 13:36 lib64
-drwxr-xr-x  1 root root     4096 Mar  7 11:23 libexec
-drwxr-xr-x  2 root root     4096 Jan 26 02:05 libx32
-drwxr-xr-x  1 root root     4096 Jan 26 02:05 local
--rwxr-xr-x  1 1001  118 98426952 Feb 28 10:43 node
-drwxr-xr-x 93 1001  118     4096 Feb 28 10:43 node_modules
-drwxr-xr-x  4 1001  118     4096 Feb 28 10:43 out
--rw-r--r--  1 1001  118      210 Feb 28 09:45 package.json
--rw-r--r--  1 1001  118    22891 Feb 28 09:48 product.json
-drwxr-xr-x  3 1001  118     4096 Feb 28 10:43 resources
-drwxr-xr-x  1 root root     4096 May  4 07:16 sbin
-drwxr-xr-x  1 root root     4096 Mar  7 11:23 share
-drwxr-xr-x  1 root root     4096 Mar  7 11:22 src
-root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell#
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# ./hsh
+$ ls -la
+total 84
+drwxr-xr-x 6 root root  4096 May  4 22:35 .
+drwx------ 1 root root  4096 May  4 15:27 ..
+drwxr-xr-x 8 root root  4096 May  4 22:35 .git
+-rw-r--r-- 1 root root    30 May  4 22:35 README.md
+drwxr-xr-x 2 root root  4096 May  4 22:35 complete_shell
+drwxr-xr-x 2 root root  4096 May  4 07:00 exercises
+-rw-r--r-- 1 root root  3719 May  4 22:35 helper_functions.c
+-rwxr-xr-x 1 root root 17320 May  4 22:35 hsh
+-rw-r--r-- 1 root root   421 May  4 22:35 main.h
+-rwxr-xr-x 1 root root 17288 May  4 22:35 simple_shell
+-rw-r--r-- 1 root root  3607 May  4 22:35 simple_shell.c
+drwxr-xr-x 2 root root  4096 May  4 22:35 tests
+$ exit
+root@b70cfa2306fa492baafbd47714396e87-2377118072:~/holbertonschool-simple_shell# 
 ```
 
 ### Non-Interactive Mode
