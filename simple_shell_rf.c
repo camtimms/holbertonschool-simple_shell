@@ -1,23 +1,27 @@
 #include "main.h"
 
-int custom_command(char **arr_arg, int exit_status, char *line)
+/**
+ * custom_command - Handles the built in commands for the shell
+ *
+ * @arr_arg: Array of arguments from stdin
+ * @exit_status: Pointer to the exit_status variable
+ *
+ * Return: 1 to skip execution, 0 no custom command, -1 exits the shell
+ */
+
+int custom_command(char **arr_arg, int *exit_status)
 {
 	int i = 0;
-	int skip = 1;
 
 	/* Check if user entered empty command */
 	if (arr_arg[0] == NULL)
-	{
-		free_arr(arr_arg);
-		skip = 1;
-	}
+		return (1);
 
 	/* Check for exit command */
 	if (strcmp(arr_arg[0], "exit") == 0)
 	{
-		free_arr(arr_arg);
-		free(line);
-		exit(exit_status);
+		*exit_status = 0;
+		return (-1);
 	}
 
 	/* Check for env command */
@@ -25,12 +29,11 @@ int custom_command(char **arr_arg, int exit_status, char *line)
 	{
 		for (i = 0; environ[i] != NULL; i++)
 			printf("%s\n", environ[i]);
-		
-		free_arr(arr_arg);
-		skip = 1;
+		*exit_status = 0;
+		return (1);
 	}
 
-	return (skip);
+	return (0);
 }
 
 /**
@@ -47,16 +50,12 @@ int custom_command(char **arr_arg, int exit_status, char *line)
 
 int main(int argc, char **argv)
 {
-	char *line =  NULL;
-	size_t len = 0;
-	int num_char = 0;
-	pid_t child_pid;
-	int status;
+	char *line =  NULL, *command_path;
 	char **arr_arg = NULL;
-	char *command_path;
-	int line_count = 0;
-	int exit_status = 0;
-	int skip = 0;
+	int num_char = 0, line_count = 1, exit_status = 0;
+	size_t len = 0;
+	int child_status, cmd_status;
+	pid_t child_pid;
 	(void)argc;
 
 	while (1)
@@ -69,9 +68,6 @@ int main(int argc, char **argv)
 		if (num_char == -1)
 			break;
 
-		line_count++;
-		skip = 0;
-
 		/* Removed newline char from line */
 		if (line[num_char - 1] == '\n')
 			line[num_char - 1] = '\0';
@@ -79,12 +75,24 @@ int main(int argc, char **argv)
 		/* Convert line to array */
 		arr_arg = line_to_arr(line);
 		if (arr_arg == NULL)
+		{
+			line_count++;
 			continue;
+		}
 
 		/*Check for custom command */
-		skip = custom_command(arr_arg, exit_status, line);
-		if (skip == 1)
+		cmd_status = custom_command(arr_arg, &exit_status);
+		if (cmd_status == -1)
+		{
+			free_arr(arr_arg);
+			break;
+		}
+		if (cmd_status == 1)
+		{
+			free_arr(arr_arg);
+			line_count++;
 			continue;
+		}
 
 		/* Get file path for the command */
 		command_path = get_path(arr_arg[0]);
@@ -94,6 +102,7 @@ int main(int argc, char **argv)
 				argv[0], line_count, arr_arg[0]);
 			exit_status = 127;
 			free_arr(arr_arg);
+			line_count++;
 			continue;
 		}
 
@@ -116,14 +125,15 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			wait(&status);
-			if (WIFEXITED(status))
-				exit_status = WEXITSTATUS(status);
+			wait(&child_status);
+			if (WIFEXITED(child_status))
+				exit_status = WEXITSTATUS(child_status);
 		}
 
 		/* Free memory for next command */
 		free(command_path);
 		free_arr(arr_arg);
+		line_count++;
 	}
 
 	free(line);
